@@ -44,7 +44,7 @@ ticker.start(({ elapsedTime }) => {
 	console.log({ starvation, lifeStatus, deathTime, hatchTime })
 
 	switch (lifeStatus) {
-		case LIFE_STATUS_ENUM.ALIVE:
+		case LIFE_STATUS_ENUM.IDLE:
 			setStarvation(starvation + deltaTime / 1000)
 			if (starvation > STARVATION_TIME)
 				eventEmitter.emit('dead')
