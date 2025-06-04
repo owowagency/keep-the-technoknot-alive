@@ -11,19 +11,16 @@ eventEmitter.on('feed', () => {
 eventEmitter.on('dead', () => {
     setLifeStatus(LIFE_STATUS_ENUM.DEAD);
     setStarvation(0)
-    renderImage('frames/dead.png')
 });
 
 eventEmitter.on('revive', () => {
     setLifeStatus(LIFE_STATUS_ENUM.UNBORN);
     setDeathTime(0)
-    renderImage('frames/unborn.png')
 })
 
 eventEmitter.on('hatch', () => {
     setLifeStatus(LIFE_STATUS_ENUM.IDLE);
     setHatchTime(0)
-    renderImage('frames/idle.png')
 });
 
 export default eventEmitter

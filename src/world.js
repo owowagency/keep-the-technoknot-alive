@@ -7,6 +7,7 @@ import "./preview.js";
 import { eventEmitter } from "./events.js";
 import { starvation, STARVATION_TIME, setStarvation, lifeStatus, LIFE_STATUS_ENUM, deathTime, setDeathTime, hatchTime, setHatchTime, TOTAL_DEATH_TIME, TOTAL_UNBORN_TIME } from "./state.js";
 import { Animator } from "./animations/index.js";
+import { renderImage } from "./render.js";
 
 // Initialize the ticker at x frames per second
 const ticker = new Ticker({ fps: FPS });
@@ -21,6 +22,7 @@ ticker.start(({ elapsedTime }) => {
 	console.clear();
 
 	console.log({ lifeStatus, hunger: `${Math.round(starvation / STARVATION_TIME * 100)}%`, 'death time': `${Math.round(deathTime / TOTAL_DEATH_TIME * 100)}%`, 'hatch time': `${Math.round(hatchTime / TOTAL_UNBORN_TIME * 100)}%` })
+	renderImage(elapsedTime);
 
 	switch (lifeStatus) {
 		case LIFE_STATUS_ENUM.IDLE:

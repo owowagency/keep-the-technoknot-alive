@@ -2,6 +2,7 @@ import { createCanvas, registerFont, loadImage } from "canvas";
 import { createDisplay } from "flipdisc";
 import fs from "node:fs";
 import { FPS, LAYOUT, DEVICES, OPTIONS } from "./settings.js";
+import { Animator } from "./animations/index.js";
 import path from "node:path";
 
 const IS_DEV = process.argv.includes("--dev");
@@ -23,8 +24,10 @@ const ctx = canvas.getContext("2d");
 // Disable anti-aliasing and image smoothing
 ctx.imageSmoothingEnabled = false;
 
-export const renderImage = async (imagePath) => {
-    const image = await loadImage(imagePath);
+const animator = new Animator();
+
+export const renderImage = async (elapsedTime) => {
+    const image = await loadImage(animator.currentFrame(elapsedTime));
     ctx.drawImage(image, 0, 0, width, height);
 
     {

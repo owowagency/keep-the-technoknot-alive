@@ -19,7 +19,6 @@ export class Animator {
             currentAnimationKey = lifeStatus;
 
             animationStart = elapsedTime;
-
         }
 
         const animation = animations[currentAnimationKey];
