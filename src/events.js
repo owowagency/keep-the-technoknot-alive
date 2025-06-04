@@ -1,15 +1,25 @@
 import EventEmitter from "node:events";
-import { starvation, LIFE_STATUS_ENUM, FOOD_EFFECTIVENESS, incStarvation, setLifeStatus } from "./state.js";
+import { starvation, LIFE_STATUS_ENUM, FOOD_EFFECTIVENESS, setStarvation, setLifeStatus, setDeathTime, setHatchTime } from "./state.js";
 
 export const eventEmitter = new EventEmitter();
 
 eventEmitter.on('feed', () => {
-    incStarvation(-Math.min(starvation, FOOD_EFFECTIVENESS))
+    setStarvation(starvation - Math.min(starvation, FOOD_EFFECTIVENESS))
 })
 
 eventEmitter.on('dead', () => {
-    console.log('eventEmitter:dead')
     setLifeStatus(LIFE_STATUS_ENUM.DEAD);
+    setStarvation(0)
+});
+
+eventEmitter.on('revive', () => {
+    setLifeStatus(LIFE_STATUS_ENUM.UNBORN);
+    setDeathTime(0)
+})
+
+eventEmitter.on('hatch', () => {
+    setLifeStatus(LIFE_STATUS_ENUM.ALIVE);
+    setHatchTime(0)
 });
 
 export default eventEmitter

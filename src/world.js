@@ -6,7 +6,7 @@ import { FPS, LAYOUT, DEVICES, OPTIONS } from "./settings.js";
 import { createDisplay } from "flipdisc";
 import "./preview.js";
 import { eventEmitter } from "./events.js";
-import { starvation, STARVATION_TIME, incStarvation, lifeStatus } from "./state.js";
+import { starvation, STARVATION_TIME, setStarvation, lifeStatus, LIFE_STATUS_ENUM, deathTime, setDeathTime, hatchTime, setHatchTime, TOTAL_DEATH_TIME, TOTAL_UNBORN_TIME } from "./state.js";
 import { renderImage } from "./render.js";
 
 const IS_DEV = process.argv.includes("--dev");
@@ -38,17 +38,29 @@ ticker.start(({ elapsedTime }) => {
 
 	console.clear();
 
-	incStarvation(deltaTime / 1000)
-	console.log({ starvation, lifeStatus })
+	console.log({ starvation, lifeStatus, deathTime, hatchTime })
 
-	if (starvation > STARVATION_TIME)
-		eventEmitter.emit('dead')
+	switch (lifeStatus) {
+		case LIFE_STATUS_ENUM.ALIVE:
+			setStarvation(starvation + deltaTime / 1000)
+			if (starvation > STARVATION_TIME)
+				eventEmitter.emit('dead')
+			break
 
-	// if (lifeStatus === LIFE_STATUS_ENUM.DEAD) {
-	// 	setDeathTime(elapsedTime / 1000)
-	// }
+		case LIFE_STATUS_ENUM.DEAD:
+			setDeathTime(deathTime + deltaTime / 1000)
+			if (deathTime > TOTAL_DEATH_TIME)
+				eventEmitter.emit('revive')
+			break
 
-	renderImage('frames/flip.png', ctx, width, height);
+		case LIFE_STATUS_ENUM.UNBORN:
+			setHatchTime(hatchTime + deltaTime / 1000)
+			if (hatchTime > TOTAL_UNBORN_TIME)
+				eventEmitter.emit('hatch')
+			break
+	}
+
+	renderImage('frames/idle.png', ctx, width, height);
 
 	{
 		const imageData = ctx.getImageData(0, 0, width, height);
