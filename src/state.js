@@ -15,7 +15,3 @@ export const incFoodAmount = (input) => foodAmount += input
 
 export let lifeStatus = LIFE_STATUS_ENUM.ALIVE
 export const setLifeStatus = (input) => lifeStatus = input
-
-export let sleepingAnimation = false;
-
-export let feedingAnimation = false;
