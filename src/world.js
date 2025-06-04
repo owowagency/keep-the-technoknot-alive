@@ -51,9 +51,7 @@ ticker.start(({ elapsedTime }) => {
 	// 	setDeathTime(elapsedTime / 1000)
 	// }
 
-	console.log(animator.currentFrame());
-
-	renderImage(animator.currentFrame(), ctx, width, height);
+	renderImage(animator.currentFrame(elapsedTime), ctx, width, height);
 
 	{
 		const imageData = ctx.getImageData(0, 0, width, height);

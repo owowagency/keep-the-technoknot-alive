@@ -9,15 +9,33 @@ export const animations = {
     sleeping,
 };
 
-export const currentAnimationKey = undefined;
+export let currentAnimationKey = undefined;
 
-export const currentAnimation = undefined;
+export let animationStart = undefined;
 
 export class Animator {
-    currentFrame() {
-        const animation = animations[lifeStatus] || animations.idle;
+    currentFrame(elapsedTime) {
+        if (currentAnimationKey !== lifeStatus) {
+            currentAnimationKey = lifeStatus;
 
+            animationStart = elapsedTime;
 
-        return animation.keyframes[0];
+        }
+
+        const animation = animations[currentAnimationKey];
+
+        const keyFramesMilliseconds = Object.keys(animation.keyframes);
+
+        let currentKeyframe = keyFramesMilliseconds.reduce((acc, current) => {
+            const mod = elapsedTime % animation.duration;
+
+            if ((mod - current) < acc) { 
+                return current;
+            }
+
+            return acc;
+        }, Infinity)
+
+        return animation.keyframes[currentKeyframe];
     }
 };

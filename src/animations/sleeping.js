@@ -1,7 +1,8 @@
 export const sleeping = {
+    duration: 2000,
     keyframes: {
-        0: 'sleeping1.png',
-        1000: 'sleeping2.png',
+        0: './frames/sleeping1.png',
+        1000: './frames/sleeping2.png',
     },
 };
 

@@ -6,6 +6,7 @@ export const LIFE_STATUS_ENUM = {
     IDLE: 'idle',
     FEEDING: 'feeding',
     DEAD: 'dead',
+    SLEEPING: 'sleeping',
 }
 export const TOTAL_DEATH_TIME = 10 // The time the fucker takes to be unborn again, in seconds
 export const TOTAL_UNBORN_TIME = 10 // The time the fucker takes to be born again, in seconds
@@ -13,7 +14,7 @@ export const TOTAL_UNBORN_TIME = 10 // The time the fucker takes to be born agai
 export let starvation = 0
 export const incStarvation = (input) => starvation += input
 
-export let lifeStatus = LIFE_STATUS_ENUM.IDLE
+export let lifeStatus = LIFE_STATUS_ENUM.SLEEPING
 export const setLifeStatus = (input) => lifeStatus = input
 
 export let deathTime = 0
