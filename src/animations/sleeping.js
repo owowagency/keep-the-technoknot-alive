@@ -1,5 +1,3 @@
-import { feedingAnimation } from '../state';
-
 export const sleeping = {
     keyframes: {
         0: 'sleeping1.png',

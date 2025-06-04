@@ -8,6 +8,7 @@ import "./preview.js";
 import { eventEmitter } from "./events.js";
 import { starvation, STARVATION_TIME, incStarvation, lifeStatus } from "./state.js";
 import { renderImage } from "./render.js";
+import { Animator } from "./animations/index.js";
 
 const IS_DEV = process.argv.includes("--dev");
 
@@ -31,6 +32,8 @@ ctx.imageSmoothingEnabled = false;
 // Initialize the ticker at x frames per second
 const ticker = new Ticker({ fps: FPS });
 
+const animator = new Animator();
+
 let prevElepsedTime = 0
 ticker.start(({ elapsedTime }) => {
 	const deltaTime = elapsedTime - prevElepsedTime
@@ -48,7 +51,9 @@ ticker.start(({ elapsedTime }) => {
 	// 	setDeathTime(elapsedTime / 1000)
 	// }
 
-	renderImage('frames/flip.png', ctx, width, height);
+	console.log(animator.currentFrame());
+
+	renderImage(animator.currentFrame(), ctx, width, height);
 
 	{
 		const imageData = ctx.getImageData(0, 0, width, height);

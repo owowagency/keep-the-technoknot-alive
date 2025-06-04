@@ -1,6 +1,6 @@
-export const sleep = {
+export const idle = {
     keyframes: {
-        0: 'idle.png',
+        0: './frames/idle.png',
     },
 };
 
