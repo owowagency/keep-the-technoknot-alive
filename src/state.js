@@ -8,7 +8,7 @@ export const LIFE_STATUS_ENUM = {
 }
 
 export let starvation = 0
-export const setStarvation = (input) => starvation += input
+export const setStarvation = (input) => starvation = input
 
 export let foodAmount = 0
 export const incFoodAmount = (input) => foodAmount += input
