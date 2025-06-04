@@ -2,11 +2,14 @@ import { lifeStatus } from '../state.js';
 import {feeding} from './feeding.js';
 import {idle} from './idle.js';
 import {sleeping} from './sleeping.js';
+import {dead} from './dead.js';
 
 export const animations = {
     feeding,
     idle,
     sleeping,
+    dead,
+    unborn: dead,
 };
 
 export let currentAnimationKey = undefined;

@@ -14,7 +14,7 @@ export const TOTAL_UNBORN_TIME = 5 // The time the fucker takes to be born again
 export let starvation = 0
 export const setStarvation = (input) => starvation = input
 
-export let lifeStatus = LIFE_STATUS_ENUM.SLEEPING
+export let lifeStatus = LIFE_STATUS_ENUM.IDLE
 export const setLifeStatus = (input) => lifeStatus = input
 
 export let deathTime = 0
