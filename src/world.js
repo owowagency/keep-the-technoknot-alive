@@ -53,7 +53,7 @@ ticker.start(({ deltaTime, elapsedTime }) => {
 	console.time("Write frame");
 
 	setStarvation(elapsedTime / 1000 - foodAmount)
-	console.log({ elapsedTime, foodAmount })
+	console.log({ starvation, foodAmount, lifeStatus })
 
 	if (starvation > STARVATION_TIME)
 		eventEmitter.emit('dead')
