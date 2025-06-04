@@ -6,7 +6,7 @@ import { FPS, LAYOUT, DEVICES, OPTIONS } from "./settings.js";
 import { createDisplay } from "flipdisc";
 import "./preview.js";
 import { eventEmitter } from "./events.js";
-import { starvation, foodAmount, STARVATION_TIME, incStarvation } from "./state.js";
+import { starvation, foodAmount, STARVATION_TIME, incStarvation, lifeStatus } from "./state.js";
 
 const IS_DEV = process.argv.includes("--dev");
 
@@ -51,8 +51,8 @@ ticker.start(({ deltaTime, elapsedTime }) => {
 	// Clear the console
 	console.clear();
 	console.time("Write frame");
-	console.log(`Rendering a ${width}x${height} canvas`);
-	console.log("View at http://localhost:3000/view");
+	console.log({ starvation, lifeStatus })
+
 
 	incStarvation(elapsedTime / 1000 - foodAmount)
 
