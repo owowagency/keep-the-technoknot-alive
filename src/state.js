@@ -3,7 +3,7 @@ export const FOOD_EFFECTIVENESS = 10 // The amound of seconds every food given w
 
 export const LIFE_STATUS_ENUM = {
     UNBORN: 'unborn',
-    ALIVE: 'alive',
+    IDLE: 'idle',
     DEAD: 'dead',
 }
 export const TOTAL_DEATH_TIME = 10 // The time the fucker takes to be unborn again, in seconds
@@ -12,7 +12,7 @@ export const TOTAL_UNBORN_TIME = 10 // The time the fucker takes to be born agai
 export let starvation = 0
 export const incStarvation = (input) => starvation += input
 
-export let lifeStatus = LIFE_STATUS_ENUM.ALIVE
+export let lifeStatus = LIFE_STATUS_ENUM.IDLE
 export const setLifeStatus = (input) => lifeStatus = input
 
 export let deathTime = 0
@@ -20,7 +20,3 @@ export const setDeathTime = (input) => deathTime = input
 
 export let bornTime = 0
 export const setBornTime = (input) => bornTime = input
-
-export let sleepingAnimation = false;
-
-export let feedingAnimation = false;
