@@ -6,7 +6,7 @@ import { FPS, LAYOUT, DEVICES, OPTIONS } from "./settings.js";
 import { createDisplay } from "flipdisc";
 import "./preview.js";
 import { eventEmitter } from "./events.js";
-import { starvation, foodAmount, STARVATION_TIME, incStarvation, lifeStatus } from "./state.js";
+import { starvation, foodAmount, STARVATION_TIME, setStarvation, lifeStatus } from "./state.js";
 
 const IS_DEV = process.argv.includes("--dev");
 
@@ -53,7 +53,7 @@ ticker.start(({ deltaTime, elapsedTime }) => {
 	console.time("Write frame");
 	console.log({ starvation, lifeStatus })
 
-	incStarvation(elapsedTime / 1000 - foodAmount)
+	setStarvation(elapsedTime / 1000 - foodAmount)
 
 	if (starvation > STARVATION_TIME)
 		eventEmitter.emit('dead')
