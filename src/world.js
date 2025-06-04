@@ -53,7 +53,6 @@ ticker.start(({ deltaTime, elapsedTime }) => {
 	console.time("Write frame");
 	console.log({ starvation, lifeStatus })
 
-
 	incStarvation(elapsedTime / 1000 - foodAmount)
 
 	if (starvation > STARVATION_TIME)
