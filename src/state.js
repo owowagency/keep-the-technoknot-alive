@@ -1,5 +1,5 @@
-export const STARVATION_TIME = 10 // The time it takes for the fucker to starve, in seconds
-export const FOOD_EFFECTIVENESS = 10 // The amound of seconds every food given will reduce from the starvation
+export const STARVATION_TIME = 20 // The time it takes for the fucker to starve, in seconds
+export const FOOD_EFFECTIVENESS = 15 // The amound of seconds every food given will reduce from the starvation
 
 export const LIFE_STATUS_ENUM = {
     UNBORN: 'unborn',
@@ -7,8 +7,8 @@ export const LIFE_STATUS_ENUM = {
     FEEDING: 'feeding',
     DEAD: 'dead',
 }
-export const TOTAL_DEATH_TIME = 10 // The time the fucker takes to be unborn again, in seconds
-export const TOTAL_UNBORN_TIME = 10 // The time the fucker takes to be born again, in seconds
+export const TOTAL_DEATH_TIME = 5 // The time the fucker takes to be unborn again, in seconds
+export const TOTAL_UNBORN_TIME = 5 // The time the fucker takes to be born again, in seconds
 
 export let starvation = 0
 export const setStarvation = (input) => starvation = input
