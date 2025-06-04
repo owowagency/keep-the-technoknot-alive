@@ -5,6 +5,8 @@ import path from "node:path";
 import { FPS, LAYOUT, DEVICES, OPTIONS } from "./settings.js";
 import { createDisplay } from "flipdisc";
 import "./preview.js";
+import { eventEmitter } from "./events.js";
+import { starvation, foodAmount, STARVATION_TIME, incStarvation } from "./state.js";
 
 const IS_DEV = process.argv.includes("--dev");
 
@@ -52,56 +54,10 @@ ticker.start(({ deltaTime, elapsedTime }) => {
 	console.log(`Rendering a ${width}x${height} canvas`);
 	console.log("View at http://localhost:3000/view");
 
-	ctx.clearRect(0, 0, width, height);
+	incStarvation(elapsedTime / 1000 - foodAmount)
 
-	// Fill the canvas with a black background
-	ctx.fillStyle = "#000";
-	ctx.fillRect(0, 0, width, height);
-
-	// Draw the elapsed time in seconds (rounded to 2 decimal places)
-	{
-		const text = (elapsedTime / 1000).toFixed(2);
-
-		ctx.fillStyle = "#fff";
-		ctx.font = '14px "Px437_ACM_VGA"';
-
-		const { actualBoundingBoxLeft, actualBoundingBoxAscent } =
-			ctx.measureText(text);
-		ctx.fillText(text, actualBoundingBoxLeft, actualBoundingBoxAscent + 1);
-	}
-
-	// Draw the OWOW logo
-	{
-		const text = "OWOW";
-
-		ctx.fillStyle = "#fff";
-		ctx.font = '12px "OpenSans" bold';
-
-		const { actualBoundingBoxAscent, actualBoundingBoxRight } =
-			ctx.measureText(text);
-		ctx.fillText(
-			text,
-			width - actualBoundingBoxRight,
-			actualBoundingBoxAscent + 1,
-		);
-	}
-
-	// Example: Draw a moving white dot
-	{
-		const w = width - 9;
-		// Time based sine wave
-		const sine = Math.sin(elapsedTime / 1000);
-		const size = 8; // 5x5 pixels
-		// Map sine wave to x-axis
-		const x = Math.floor(((sine + 1) / 2) * w) - size / 2 + 5;
-		const y = height - size - 1;
-		ctx.fillStyle = "#fff";
-
-		// Draw the dot (a filled circle)
-		ctx.beginPath();
-		ctx.arc(x + size / 2, y + size / 2, size / 2, 0, Math.PI * 2);
-		ctx.fill();
-	}
+	if (starvation > STARVATION_TIME)
+		eventEmitter.emit('dead')
 
 	// Convert image to binary (purely black and white) for flipdot display
 	{
