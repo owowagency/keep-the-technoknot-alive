@@ -6,7 +6,7 @@ import { FPS, LAYOUT, DEVICES, OPTIONS } from "./settings.js";
 import { createDisplay } from "flipdisc";
 import "./preview.js";
 import { eventEmitter } from "./events.js";
-import { starvation, foodAmount, STARVATION_TIME, setStarvation, lifeStatus } from "./state.js";
+import { starvation, STARVATION_TIME, incStarvation, lifeStatus } from "./state.js";
 import { renderImage } from "./render.js";
 
 const IS_DEV = process.argv.includes("--dev");
@@ -31,14 +31,22 @@ ctx.imageSmoothingEnabled = false;
 // Initialize the ticker at x frames per second
 const ticker = new Ticker({ fps: FPS });
 
+let prevElepsedTime = 0
 ticker.start(({ elapsedTime }) => {
+	const deltaTime = elapsedTime - prevElepsedTime
+	prevElepsedTime = elapsedTime
+
 	console.clear();
 
-	setStarvation(elapsedTime / 1000 - foodAmount)
-	console.log({ starvation, foodAmount, lifeStatus })
+	incStarvation(deltaTime / 1000)
+	console.log({ starvation, lifeStatus })
 
 	if (starvation > STARVATION_TIME)
 		eventEmitter.emit('dead')
+
+	// if (lifeStatus === LIFE_STATUS_ENUM.DEAD) {
+	// 	setDeathTime(elapsedTime / 1000)
+	// }
 
 	renderImage('frames/flip.png', ctx, width, height);
 
