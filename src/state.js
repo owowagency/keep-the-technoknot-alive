@@ -4,6 +4,7 @@ export const FOOD_EFFECTIVENESS = 10 // The amound of seconds every food given w
 export const LIFE_STATUS_ENUM = {
     UNBORN: 'unborn',
     IDLE: 'idle',
+    FEEDING: 'feeding',
     DEAD: 'dead',
 }
 export const TOTAL_DEATH_TIME = 10 // The time the fucker takes to be unborn again, in seconds

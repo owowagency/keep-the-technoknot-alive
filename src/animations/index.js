@@ -1,11 +1,11 @@
-import {feed} from './feed.js';
+import {feeding} from './feeding.js';
 import {idle} from './idle.js';
-import {sleep} from './sleep.js';
+import {sleeping} from './sleeping.js';
 
 export const animations = {
-    feed,
+    feeding,
     idle,
-    sleep,
+    sleeping,
 };
 
 export const currentAnimationKey = undefined;
