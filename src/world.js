@@ -8,6 +8,7 @@ import "./preview.js";
 import { eventEmitter } from "./events.js";
 import { starvation, STARVATION_TIME, setStarvation, lifeStatus, LIFE_STATUS_ENUM, deathTime, setDeathTime, hatchTime, setHatchTime, TOTAL_DEATH_TIME, TOTAL_UNBORN_TIME } from "./state.js";
 import { renderImage } from "./render.js";
+import { Animator } from "./animations/index.js";
 
 const IS_DEV = process.argv.includes("--dev");
 
@@ -30,6 +31,8 @@ ctx.imageSmoothingEnabled = false;
 
 // Initialize the ticker at x frames per second
 const ticker = new Ticker({ fps: FPS });
+
+const animator = new Animator();
 
 let prevElepsedTime = 0
 ticker.start(({ elapsedTime }) => {
@@ -61,6 +64,9 @@ ticker.start(({ elapsedTime }) => {
 	}
 
 	renderImage('frames/idle.png', ctx, width, height);
+	console.log(animator.currentFrame());
+
+	renderImage(animator.currentFrame(), ctx, width, height);
 
 	{
 		const imageData = ctx.getImageData(0, 0, width, height);

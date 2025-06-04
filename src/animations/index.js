@@ -1,11 +1,12 @@
-import {feed} from './feed.js';
+import { lifeStatus } from '../state.js';
+import {feeding} from './feeding.js';
 import {idle} from './idle.js';
-import {sleep} from './sleep.js';
+import {sleeping} from './sleeping.js';
 
 export const animations = {
-    feed,
+    feeding,
     idle,
-    sleep,
+    sleeping,
 };
 
 export const currentAnimationKey = undefined;
@@ -13,9 +14,10 @@ export const currentAnimationKey = undefined;
 export const currentAnimation = undefined;
 
 export class Animator {
-    currentAnimation = undefined;
-
     currentFrame() {
-        const animation = 
+        const animation = animations[lifeStatus] || animations.idle;
+
+
+        return animation.keyframes[0];
     }
 };
