@@ -2,6 +2,9 @@ import { createCanvas, registerFont, loadImage } from "canvas";
 import { createDisplay } from "flipdisc";
 import fs from "node:fs";
 import { FPS, LAYOUT, DEVICES, OPTIONS } from "./settings.js";
+import path from "node:path";
+
+const IS_DEV = process.argv.includes("--dev");
 
 // Create display
 const display = createDisplay(LAYOUT, DEVICES, OPTIONS);
@@ -20,8 +23,8 @@ const ctx = canvas.getContext("2d");
 // Disable anti-aliasing and image smoothing
 ctx.imageSmoothingEnabled = false;
 
-export const renderImage = async (path) => {
-    const image = await loadImage(path);
+export const renderImage = async (imagePath) => {
+    const image = await loadImage(imagePath);
     ctx.drawImage(image, 0, 0, width, height);
 
     {
@@ -37,5 +40,15 @@ export const renderImage = async (path) => {
             data[i + 3] = 255; // The board is not transparent :-)
         }
         ctx.putImageData(imageData, 0, 0);
+    }
+
+    if (IS_DEV) {
+        // Save the canvas as a PNG file
+        const filename = path.join(outputDir, "frame.png");
+        const buffer = canvas.toBuffer("image/png");
+        fs.writeFileSync(filename, buffer);
+    } else {
+        const { data } = ctx.getImageData(0, 0, display.width, display.height);
+        display.send([...data.values()]);
     }
 }
