@@ -1,14 +1,27 @@
 import { createCanvas, registerFont, loadImage } from "canvas";
-import { createDisplay } from "flipdisc";
 import fs from "node:fs";
-import { FPS, LAYOUT, DEVICES, OPTIONS } from "./settings.js";
+import { FPS, LAYOUT } from "./settings.js";
+import { Display } from "@owowagency/flipdot-emu";
 import { Animator } from "./animations/index.js";
 import path from "node:path";
 
 const IS_DEV = process.argv.includes("--dev");
 
 // Create display
-const display = createDisplay(LAYOUT, DEVICES, OPTIONS);
+const display = new Display({
+	layout: LAYOUT,
+	panelWidth: 28,
+	isMirrored: true,
+	transport: !IS_DEV ? {
+		type: 'serial',
+		path: '/dev/ttyACM0',
+		baudRate: 57600
+	} : {
+		type: 'ip',
+		host: '127.0.0.1',
+		port: 3000
+	}
+});
 const { width, height } = display;
 
 // Create output directory if it doesn't exist
@@ -51,7 +64,10 @@ export const renderImage = async (elapsedTime) => {
         const buffer = canvas.toBuffer("image/png");
         fs.writeFileSync(filename, buffer);
     } else {
-        const { data } = ctx.getImageData(0, 0, display.width, display.height);
-        display.send([...data.values()]);
+        const imageData = ctx.getImageData(0, 0, display.width, display.height);
+		display.setImageData(imageData);
+		if (display.isDirty()) {
+			display.flush();
+		}
     }
 }

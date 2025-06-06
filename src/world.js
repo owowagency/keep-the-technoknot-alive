@@ -2,7 +2,7 @@ import { Ticker } from "./ticker.js";
 import { createCanvas, registerFont } from "canvas";
 import fs from "node:fs";
 import path from "node:path";
-import { FPS, LAYOUT, DEVICES, OPTIONS } from "./settings.js";
+import { FPS } from "./settings.js";
 import "./preview.js";
 import { eventEmitter } from "./events.js";
 import { starvation, STARVATION_TIME, setStarvation, lifeStatus, LIFE_STATUS_ENUM, deathTime, setDeathTime, hatchTime, setHatchTime, TOTAL_DEATH_TIME, TOTAL_UNBORN_TIME } from "./state.js";
