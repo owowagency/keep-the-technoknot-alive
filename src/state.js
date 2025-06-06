@@ -1,4 +1,4 @@
-export const STARVATION_TIME = 5 // The time it takes for the fucker to starve, in seconds
+export const STARVATION_TIME = 60 * 60 * 8 // The time it takes for the fucker to starve, in seconds
 export const FOOD_EFFECTIVENESS = 15 // The amound of seconds every food given will reduce from the starvation
 
 export const LIFE_STATUS_ENUM = {
